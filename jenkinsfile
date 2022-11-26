@@ -9,16 +9,4 @@ node('built-in')
     {
        sh 'mvn package'
     }
-     stage('contDeploy_master')
-    {
-         deploy adapters: [tomcat9(credentialsId: 'cfe369c6-f976-47da-8159-4b48df4fabcc', path: '', url: 'http://172.31.85.11:8080')], contextPath: 'testapp', war: '**/*.war'
-    }
-     stage('contTesting_master')
-    {
-        git '  https://github.com/intelliqittrainings/FunctionalTesting.git'
-    }
-    stage('contDelivery_master')
-    {
-       deploy adapters: [tomcat9(credentialsId: 'cfe369c6-f976-47da-8159-4b48df4fabcc', path: '', url: 'http://172.31.94.55:8080')], contextPath: 'prodapp', war: '**/*.war'
-    }
 }
