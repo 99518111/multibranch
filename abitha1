@@ -1,0 +1,50 @@
+pipeline
+{
+    
+    agent any
+    stages
+    {
+        
+        stage ('continousDown')
+        {
+            
+            steps
+            {
+               git '  https://github.com/intelliqittrainings/maven.git'
+            }
+        }
+         stage ('continousBuild')
+        {
+            
+            steps
+            {
+               sh 'mvn package'
+            }
+        }
+            stage ('continousDeployment')
+        {
+            
+            steps
+            {
+               sh 'scp /var/lib/jenkins/workspace/practice_declrativepipeline/webapp/target/webapp.war ubuntu@172.31.85.11:/var/lib/tomcat9/webapps/testapp.war'
+            }
+        }
+        stage ('continoustesting')
+        {
+            
+            steps
+            {
+               git '   https://github.com/intelliqittrainings/FunctionalTesting.git'
+            }
+        }
+         stage ('continousdelivery')
+        {
+            steps
+            {
+               sh 'scp /var/lib/jenkins/workspace/practice_declrativepipeline/webapp/target/webapp.war ubuntu@172.31.85.11:/var/lib/tomcat9/webapps/prodapp.war'
+           
+        
+            }
+        }
+    }
+}
